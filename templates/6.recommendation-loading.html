@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -29,43 +29,5 @@
       }, 3000); // 3초 후 추천 결과 페이지로 이동
     </script>
   </body>
-</html> -->
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="utf-8" />
-    <title>추천 로딩 중</title>
-
-    <!-- ✅ Flask static 경로 -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/globals.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/6.recommendation-loading.css') }}" />
-  </head>
-  <body>
-
-    <!-- ✅ 배경 이미지 -->
-    <img src="{{ url_for('static', filename='images/6.screen_recommendation_loading.jpg') }}" alt="전체 화면" />
-
-    <div class="element">
-      <div class="overlap-group-wrapper">
-        <div class="overlap-group">
-          <img class="ellipse" src="{{ url_for('static', filename='images/ellipse-2.svg') }}" />
-          <img class="img" src="{{ url_for('static', filename='images/ellipse-3.svg') }}" />
-          <img class="image" src="{{ url_for('static', filename='images/image.svg') }}" />
-          <div class="frame">
-            <p class="text-wrapper">Google 캘린더와 날씨 정보를 불러오는 중입니다.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ✅ 추천 결과 페이지로 자동 이동 -->
-    <script>
-      setTimeout(() => {
-        window.location.href = "/recommendation";
-      }, 3000); // 3초 후 이동
-    </script>
-
-  </body>
 </html>
+

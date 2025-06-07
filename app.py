@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from model import recommend_for_user  # model/__init__.py 통해 직접 import 가능
-
+from model.notification_service import run_push_notifications
+from firebase_admin import credentials, initialize_app
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 CORS(app)
@@ -41,6 +42,17 @@ def api_recommend():
     user_id = request.args.get("user_id", default="1")
     result = recommend_for_user(user_id)
     return jsonify({"recommendations": result})
+
+# Firebase 초기화 (이미 했다면 중복 X)
+cred = credentials.Certificate("model/firebase_key.json")
+initialize_app(cred)
+
+USER_DEVICE_TOKEN = "디바이스에서 가져온 토큰"
+
+@app.route("/trigger-push")
+def trigger_push():
+    run_push_notifications(USER_DEVICE_TOKEN)
+    return "🔔 푸시 완료"
 
 if __name__ == "__main__":
     app.run(debug=True)

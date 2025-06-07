@@ -3,24 +3,21 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles/globals.css" />
+    <link rel="stylesheet" href="styles/2-2.login-success.css" />
     <title>로그인 성공</title>
 
-    <!-- ✅ Flask static 경로로 변경 -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/globals.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/2-2.login-success.css') }}" />
   </head>
   <body>
-    <!-- ✅ 이미지 경로 수정 -->
-    <img src="{{ url_for('static', filename='images/2-2.screen_login-success.jpg') }}" alt="전체 화면" />
+    <img src="images/2-2.screen_login-success.jpg" alt="전체 화면" />
 
     <div class="element">
       <div class="overlap-group-wrapper">
         <div class="overlap-group">
-          <!-- ✅ 내부 이미지들도 static 경로로 -->
-          <img class="ellipse" src="{{ url_for('static', filename='images/ellipse-2.svg') }}" />
-          <img class="img" src="{{ url_for('static', filename='images/ellipse-3.svg') }}" />
+          <img class="ellipse" src="img/ellipse-2.svg" />
+          <img class="img" src="img/ellipse-3.svg" />
           <div class="text-wrapper">환영합니다.</div>
-          <img class="group" src="{{ url_for('static', filename='images/group-12.png') }}" />
+          <img class="group" src="img/group-12.png" />
           <div class="frame">
             <p class="div">Google 캘린더와 날씨 정보를 불러오는 중입니다.</p>
           </div>
@@ -28,11 +25,12 @@
       </div>
     </div>
 
-    <!-- ✅ 이동 경로를 Flask 라우팅에 맞게 -->
+    <!-- 불러온 후 페이지 이동 -->
     <script>
       setTimeout(function () {
-        window.location.href = "/profile";
-      }, 3000);
+        // 불러오기 완료 후 다음 페이지로 이동
+        window.location.href = "3.profile.html";
+      }, 3000); // 3초 후 이동 (필요시 조정 가능)
     </script>
   </body>
 </html>

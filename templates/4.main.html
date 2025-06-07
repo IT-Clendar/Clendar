@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -45,62 +45,6 @@
     window.location.href = "5.recommendation.html";
   });
 </script>
-
-  </body>
-</html> -->
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="utf-8" />
-    <title>메인 화면</title>
-
-    <!-- ✅ Flask static 경로로 수정 -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/globals.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/4.main.css') }}" />
-  </head>
-  <body>
-
-    <!-- ✅ 이미지 경로 Flask 방식 -->
-    <img src="{{ url_for('static', filename='images/4.screen_main.jpg') }}" alt="전체 화면" />
-
-    <img src="{{ url_for('static', filename='images/4.btn_mypage.svg') }}" alt="내 정보 버튼"
-         id="mypage-button"
-         style="position:absolute; top:47px; left:330px; width:29px; height:41px; object-fit:contain;" />
-
-    <img src="{{ url_for('static', filename='images/4.btn_recommend.svg') }}" alt="추천 결과 버튼"
-         id="recommend-button"
-         style="position:absolute; top:590px; left:45px; width:310px; height:82px; object-fit:contain;" />
-
-    <!-- ✅ 내부 요소 이미지 경로들 수정 -->
-    <div class="element">
-      <div class="overlap-group-wrapper">
-        <div class="overlap-group">
-          <img class="ellipse" src="{{ url_for('static', filename='images/ellipse-4.svg') }}" />
-          <img class="img" src="{{ url_for('static', filename='images/ellipse-3.svg') }}" />
-          <img class="group" src="{{ url_for('static', filename='images/group-7.svg') }}" />
-          <img class="img-2" src="{{ url_for('static', filename='images/image-2.svg') }}" />
-          <img class="line" src="{{ url_for('static', filename='images/line-2.svg') }}" />
-          <img class="frame" src="{{ url_for('static', filename='images/frame-15.svg') }}" />
-          <div class="view"><img class="group-2" src="{{ url_for('static', filename='images/group-8.png') }}" /></div>
-          <img class="group-3" src="{{ url_for('static', filename='images/group-40.svg') }}" />
-          <img class="image" src="{{ url_for('static', filename='images/image-3.svg') }}" />
-          <img class="image-2" src="{{ url_for('static', filename='images/image.svg') }}" />
-        </div>
-      </div>
-    </div>
-
-    <!-- ✅ 라우팅 경로도 Flask 기준으로 수정 -->
-    <script>
-      document.getElementById("mypage-button").addEventListener("click", function () {
-        window.location.href = "/profile";
-      });
-
-      document.getElementById("recommend-button").addEventListener("click", function () {
-        window.location.href = "/recommendation-loading";
-      });
-    </script>
 
   </body>
 </html>
