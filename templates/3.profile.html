@@ -1,98 +1,105 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="utf-8" />
-    <title><프로필 설정></title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/globals.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/3.profile.css') }}" />
-  </head>
-  <body>
-    <img src="{{ url_for('static', filename='images/3.screen_profile.jpg') }}" alt="전체 화면" class="background-image" />
-    <div class="container">
-      <h2 class="title">내 정보를 저장해요</h2>
-      <input type="text" class="input-box" id="nickname" placeholder="닉네임" />
-      <input type="number" class="input-box" id="age" placeholder="나이" />
-      <input type="text" class="input-box" id="job" placeholder="직업" />
+<html lang="ko">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <title>프로필 설정</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/globals.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/3.profile.css') }}" />
+</head>
+<body>
 
-      <p class="label">날씨 민감도</p>
-      <div class="sensitivity-buttons">
-        <button id="check1-button" class="circle-button">낮음</button>
-        <button id="check2-button" class="circle-button">보통</button>
-        <button id="check3-button" class="circle-button">높음</button>
-      </div>
+  <!-- 배경 이미지 -->
+  <img src="{{ url_for('static', filename='images/3.screen_profile.jpg') }}" alt="전체 화면" class="background-image" />
 
-      <p class="label">선호 활동</p>
-      <p class="guide">좋아하는 활동을 선택해 주세요. (중복 선택 가능)</p>
-      <div class="activity-buttons">
-        {% for activity in ['running','drama','friends','gym','homeworkout','movie','music','photo','reading','swimming','walk','yoga'] %}
-        <div class="button-wrapper" data-id="{{ activity }}">
-          <img src="{{ url_for('static', filename='images/3.btn_activity_' + activity + '.svg') }}" alt="{{ activity }}" class="button-img" />
-        </div>
-        {% endfor %}
-      </div>
+  <!-- 내용 박스 -->
+  <div class="container">
+    <h2 class="title">내 정보를 저장해요</h2>
 
-      <p class="label">맞춤형 추천을 위한 추가 정보</p>
-      <input type="text" class="input-box" id="addtion" placeholder="운동, 독서 등..." />
+    <input type="text" class="input-box" id="nickname" placeholder="닉네임" />
+    <input type="number" class="input-box" id="age" placeholder="나이" />
+    <input type="text" class="input-box" id="job" placeholder="직업" />
 
-      <button id="save-button" class="save-button">저장</button>
+    <p class="label">날씨 민감도</p>
+    <div class="sensitivity-buttons">
+      <button id="check1-button" class="circle-button">낮음</button>
+      <button id="check2-button" class="circle-button">보통</button>
+      <button id="check3-button" class="circle-button">높음</button>
     </div>
 
-    <script>
-      document.querySelectorAll('.input-box').forEach(input => {
-        input.addEventListener('input', () => {
-          input.classList.toggle('filled', input.value.trim() !== '');
+    <p class="label">선호 활동</p>
+    <p class="guide">좋아하는 활동을 선택해 주세요. (중복 선택 가능)</p>
+    <div class="activity-buttons">
+      {% for activity in ['running','drama','friends','gym','homeworkout','movie','music','photo','reading','swimming','walk','yoga'] %}
+      <div class="button-wrapper" data-id="{{ activity }}">
+        <img src="{{ url_for('static', filename='images/3.btn_activity_' + activity + '.svg') }}" alt="{{ activity }}" class="button-img" />
+      </div>
+      {% endfor %}
+    </div>
+
+    <p class="label">맞춤형 추천을 위한 추가 정보</p>
+    <input type="text" class="input-box" id="addtion" placeholder="운동, 독서 등..." />
+
+    <button id="save-button" class="save-button">저장</button>
+  </div>
+
+  <!-- JS -->
+  <script>
+    document.querySelectorAll('.input-box').forEach(input => {
+      input.addEventListener('input', () => {
+        input.classList.toggle('filled', input.value.trim() !== '');
+      });
+    });
+
+    const group1 = ["check1-button", "check2-button", "check3-button"];
+    group1.forEach(id => {
+      const btn = document.getElementById(id);
+      btn.addEventListener("click", () => {
+        group1.forEach(otherId => {
+          const otherBtn = document.getElementById(otherId);
+          otherBtn.classList.remove("selected");
+          localStorage.setItem(otherId, "false");
         });
+        btn.classList.add("selected");
+        localStorage.setItem(id, "true");
+      });
+    });
+
+    document.querySelectorAll(".button-wrapper").forEach((wrapper, index) => {
+      wrapper.addEventListener("click", () => {
+        wrapper.classList.toggle("active");
+        localStorage.setItem(`activity-button-${index}`, wrapper.classList.contains("active"));
+      });
+    });
+
+    document.getElementById('save-button').addEventListener('click', () => {
+      ['nickname', 'age', 'job', 'addtion'].forEach(id => {
+        const value = document.getElementById(id).value;
+        localStorage.setItem(id, value);
+      });
+      alert('저장되었습니다');
+      window.location.href = "/main";
+    });
+
+    window.addEventListener('load', () => {
+      ['nickname', 'age', 'job', 'addtion'].forEach(id => {
+        const value = localStorage.getItem(id);
+        if (value) document.getElementById(id).value = value;
       });
 
-      const group1 = ["check1-button", "check2-button", "check3-button"];
       group1.forEach(id => {
-        const btn = document.getElementById(id);
-        btn.addEventListener("click", () => {
-          group1.forEach(otherId => {
-            const otherBtn = document.getElementById(otherId);
-            otherBtn.classList.remove("selected");
-            localStorage.setItem(otherId, "false");
-          });
-          btn.classList.add("selected");
-          localStorage.setItem(id, "true");
-        });
+        if (localStorage.getItem(id) === "true") {
+          document.getElementById(id).classList.add("selected");
+        }
       });
 
       document.querySelectorAll(".button-wrapper").forEach((wrapper, index) => {
-        wrapper.addEventListener("click", () => {
-          wrapper.classList.toggle("active");
-          localStorage.setItem(`activity-button-${index}`, wrapper.classList.contains("active"));
-        });
+        if (localStorage.getItem(`activity-button-${index}`) === "true") {
+          wrapper.classList.add("active");
+        }
       });
+    });
+  </script>
 
-      document.getElementById('save-button').addEventListener('click', () => {
-        ['nickname', 'age', 'job', 'addtion'].forEach(id => {
-          const value = document.getElementById(id).value;
-          localStorage.setItem(id, value);
-        });
-        alert('저장되었습니다');
-        window.location.href = "/main";
-      });
-
-      window.addEventListener('load', () => {
-        ['nickname', 'age', 'job', 'addtion'].forEach(id => {
-          const value = localStorage.getItem(id);
-          if (value) document.getElementById(id).value = value;
-        });
-
-        group1.forEach(id => {
-          if (localStorage.getItem(id) === "true") {
-            document.getElementById(id).classList.add("selected");
-          }
-        });
-
-        document.querySelectorAll(".button-wrapper").forEach((wrapper, index) => {
-          if (localStorage.getItem(`activity-button-${index}`) === "true") {
-            wrapper.classList.add("active");
-          }
-        });
-      });
-    </script>
-  </body>
+</body>
 </html>
