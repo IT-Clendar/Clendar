@@ -1,282 +1,102 @@
-<!-- <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="globals.css" />
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      .recommendation-box {
-        position: absolute;
-        width: 334px;
-        height: 86px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        color: black;
-        font-weight: bold;
-        padding: 0 10px;
-        pointer-events: none;
-        overflow: hidden;
-      }
-
-      .recommendation-text {
-        font-size: 20px;
-        line-height: 1.2;
-        max-width: 100%;
-        white-space: normal;
-        word-break: keep-all;
-      }
-
-      .scale-fit {
-        font-size: clamp(12px, 2vw, 20px);
-      }
-
-      .recommendation-button.clicked {
-        filter: brightness(0.92);
-      }
-
-      #toast-message {
-        position: absolute;
-        top: 400px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #eeeeee;
-        color: #333;
-        padding: 12px 20px;
-        border-radius: 10px;
-        font-size: 16px;
-        font-weight: bold;
-        display: none;
-        z-index: 10;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
-
-
-#weather-box {
-  position: absolute;
-  top: 270px;
-  left: 46px;
-  width: 300px;
-  height: 72px;
-  background-color: #ffffff; /* 흰색 배경 */
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 10px;
-  font-size: 18px;
-  font-weight: 500;
-  color: #000000; /* 검정색 글씨 */
-  z-index: 5;
-}
-
-    </style>
-  </head>
-  <body>
-
-    <!-- 전체 화면 -->
-    <img src="images/5.screen_recommendation.jpg" alt="전체 화면" />
-
-    <!-- 일정 정보 박스 날씨 API로 대체--> 
-<div id="schedule-1" style="
-  position: absolute;
-  top: 150px;
-  left: 62px;
-  width: 270px;
-  height: 15px;
-  font-size: 17px;
-  font-weight: 500;
-  color: #000000;
-">
-  9:00 러닝
-</div>
-
-<div id="schedule-2" style="
-  position: absolute;
-  top: 180px;
-  left: 62px;
-  width: 270px;
-  height: 15px;
-  font-size: 17px;
-  font-weight: 500;
-  color: #000000;
-">
-  10:00 학교 수업
-</div>
-
-<div id="schedule-3" style="
-  position: absolute;
-  top: 210px;
-  left: 62px;
-  width: 270px;
-  height: 15px;
-  font-size: 17px;
-  font-weight: 500;
-  color: #000000;
-">
-  12:00 점심 약속
-</div>
-
-    <!-- 날씨 정보 박스 날씨 API로 대체-->
-    <div id="weather-box">
-      <div id="weather-text">25.4°C, 화창하고 맑아요</div>
-    </div>
-
-    <!-- 홈 버튼 -->
-    <img src="images/3.btn_home.svg" alt="홈 버튼"
-      id="home-button"
-      style="position:absolute; top:47px; left:50px; width:33px; height:47px; object-fit:contain;" />
-
-    <!-- 오늘의 일정 텍스트 -->
-
-    <img src="images/5.text_today_schedule.svg" alt="오늘의 일정"
-      style="position:absolute; top:58px; left:120px; width:169px; height:34px; object-fit:contain;" />
-
-
-    <!-- 마이페이지 버튼 -->
-    <img src="images/4.btn_mypage.svg" alt="내 정보 버튼"
-      id="mypage-button"
-      style="position:absolute; top:47px; left:330px; width:29px; height:41px; object-fit:contain;" />
-
-    <!-- 추천 결과 버튼 1 -->
-    <img src="images/5.btn_recommendation_act1.svg" alt="추천 결과1"
-      id="recommendation1-btn"
-      class="recommendation-button"
-      style="position:absolute; top:450px; left:43px; width:334px; height:86px; object-fit:contain;" />
-    <div class="recommendation-box" style="top:450px; left:43px;">
-      <div id="recommendation1-text" class="recommendation-text scale-fit">20분간 성북천 러닝</div>
-    </div>
-
-    <!-- 추천 결과 버튼 2 -->
-    <img src="images/5.btn_recommendation_act2.svg" alt="추천 결과2"
-      id="recommendation2-btn"
-      class="recommendation-button"
-      style="position:absolute; top:550px; left:43px; width:334px; height:86px; object-fit:contain;" />
-    <div class="recommendation-box" style="top:550px; left:43px;">
-      <div id="recommendation2-text" class="recommendation-text scale-fit">한강 피크닉 즐기기</div>
-    </div>
-
-    <!-- 추천 다시 받기 버튼 -->
-    <img src="images/5.btn_recommendation_again.svg" alt="추천 다시 받기"
-      id="recommendation_again-button"
-      style="position:absolute; top:700px; left:43px; width:334px; height:86px; object-fit:contain;" />
-
-    <!-- 알림 메시지 -->
-    <div id="toast-message">일정이 수정/등록 되었습니다</div>
-
-    <script>
-      const recommendations = [
-        { text1: "20분간 성북천 러닝", text2: "한강 피크닉 즐기기" },
-        { text1: "북서울 꿈의 숲에서 힐링 산책하기", text2: "서울숲 피크닉으로 여유 찾기" },
-        { text1: "북악산 성곽길 트래킹", text2: "정릉시장 먹거리 투어" },
-        { text1: "한적한 도서관에서 하루 보내기", text2: "성북동 골목에서 감성 산책" },
-      ];
-
-      function updateRecommendations() {
-        const randomIndex = Math.floor(Math.random() * recommendations.length);
-        const rec = recommendations[randomIndex];
-        document.getElementById("recommendation1-text").textContent = rec.text1;
-        document.getElementById("recommendation2-text").textContent = rec.text2;
-      }
-
-      function showToast(message) {
-        const toast = document.getElementById("toast-message");
-        toast.textContent = message;
-        toast.style.display = "block";
-        setTimeout(() => {
-          toast.style.display = "none";
-        }, 2000);
-      }
-
-      function handleRecommendationClick(buttonId) {
-        const btn = document.getElementById(buttonId);
-        btn.classList.add("clicked");
-        showToast("일정이 수정/등록 되었습니다");
-      }
-
-      document.getElementById("mypage-button").addEventListener("click", () => {
-        window.location.href = "3.profile.html";
-      });
-
-      document.getElementById("home-button").addEventListener("click", () => {
-        window.location.href = "4.main.html";
-      });
-
-      document.getElementById("recommendation_again-button").addEventListener("click", () => {
-        window.location.href = "6.recommendation-loading.html";
-      });
-
-      document.getElementById("recommendation1-btn").addEventListener("click", () => {
-        handleRecommendationClick("recommendation1-btn");
-      });
-
-      document.getElementById("recommendation2-btn").addEventListener("click", () => {
-        handleRecommendationClick("recommendation2-btn");
-      });
-
-      // 초기 표시
-      updateRecommendations();
-    </script>
-  </body>
-</html> -->
-
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>추천 결과</title>
-
-    <!-- ✅ CSS 경로 수정 -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/globals.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/5.recommendation.css') }}" />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        background-color: #f5f7fa;
+        position: relative;
+      }
+
+      .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: -1;
+      }
+
+      .container {
+        max-width: 390px;
+        margin: 0 auto;
+        padding: 20px;
+        position: relative;
+        text-align: center;
+      }
+
+      .top-right-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 30px;
+        height: auto;
+        cursor: pointer;
+      }
+
+      .section-img {
+        width: 100%;
+        max-width: 310px;
+        margin: 15px auto;
+        display: block;
+        object-fit: contain;
+      }
+
+      @media screen and (max-width: 400px) {
+        .section-img {
+          max-width: 90%;
+        }
+      }
+    </style>
   </head>
+
   <body>
+    <!-- ✅ 배경 이미지 -->
+    <img src="{{ url_for('static', filename='images/5.screen_recommendation.jpg') }}" alt="추천 결과 배경" class="background" />
 
-    <!-- ✅ 추천 결과 배경 이미지 -->
-    <img src="{{ url_for('static', filename='images/5.screen_recommendation.jpg') }}" alt="추천 결과 배경" />
+    <div class="container">
+      <!-- 내 정보로 이동 버튼 (오른쪽 위) -->
+      <img src="{{ url_for('static', filename='images/4.btn_mypage.svg') }}"
+           alt="내 정보"
+           id="mypage-button"
+           class="top-right-button" />
 
-    <!-- 추천된 활동 버튼들 -->
-    <img src="{{ url_for('static', filename='images/5.btn_recommendation_act1.svg') }}"
-         alt="추천1"
-         style="position:absolute; top:600px; left:45px; width:310px; height:82px; object-fit:contain;" />
+      <!-- 오늘의 일정 텍스트 -->
+      <img src="{{ url_for('static', filename='images/5.text_today_schedule.svg') }}"
+           alt="오늘 일정"
+           class="section-img" />
 
-    <img src="{{ url_for('static', filename='images/5.btn_recommendation_act2.svg') }}"
-         alt="추천2"
-         style="position:absolute; top:700px; left:45px; width:310px; height:82px; object-fit:contain;" />
+      <!-- 추천 활동 버튼들 -->
+      <img src="{{ url_for('static', filename='images/5.btn_recommendation_act1.svg') }}"
+           alt="추천1"
+           class="section-img" />
 
-    <!-- 다시 추천받기 버튼 -->
-    <img src="{{ url_for('static', filename='images/5.btn_recommendation_again.svg') }}"
-         id="again-button"
-         alt="다시 추천"
-         style="position:absolute; top:800px; left:45px; width:310px; height:82px; object-fit:contain;" />
+      <img src="{{ url_for('static', filename='images/5.btn_recommendation_act2.svg') }}"
+           alt="추천2"
+           class="section-img" />
 
-    <!-- 추천 날짜 표시 등 텍스트 -->
-    <img src="{{ url_for('static', filename='images/5.text_today_schedule.svg') }}"
-         alt="오늘 일정 텍스트"
-         style="position:absolute; top:530px; left:45px; object-fit:contain;" />
-
-    <!-- 내 정보로 이동 버튼 -->
-    <img src="{{ url_for('static', filename='images/4.btn_mypage.svg') }}"
-         id="mypage-button"
-         alt="내 정보"
-         style="position:absolute; top:47px; left:330px; width:29px; height:41px; object-fit:contain;" />
+      <!-- 다시 추천 버튼 -->
+      <img src="{{ url_for('static', filename='images/5.btn_recommendation_again.svg') }}"
+           alt="다시 추천"
+           id="again-button"
+           class="section-img" />
+    </div>
 
     <script>
-      // 다시 추천 → 로딩 화면으로 이동
       document.getElementById("again-button").addEventListener("click", function () {
         window.location.href = "/recommendation-loading";
       });
 
-      // 내 정보 → 프로필로 이동
       document.getElementById("mypage-button").addEventListener("click", function () {
         window.location.href = "/profile";
       });
     </script>
-
   </body>
 </html>
