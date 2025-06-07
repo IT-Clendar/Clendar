@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>로그인 로딩 중</title>
+
+    <!-- ✅ Flask 방식으로 static 폴더에서 CSS 불러오기 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/globals.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/2-1.login-loading.css') }}" />
+  </head>
+  <body>
+    <!-- ✅ 이미지 경로 Flask 방식 -->
+    <img src="{{ url_for('static', filename='images/2-1.screen_login-loading.jpg') }}" alt="전체 화면" />
+
+    <div class="element">
+      <div class="overlap-group-wrapper">
+        <div class="overlap-group">
+          <!-- ✅ 나머지 이미지 경로들도 수정 -->
+          <img class="ellipse" src="{{ url_for('static', filename='images/ellipse-2.svg') }}" />
+          <img class="img" src="{{ url_for('static', filename='images/ellipse-3.svg') }}" />
+          <div class="text-wrapper">로딩 중</div>
+          <img class="group" src="{{ url_for('static', filename='images/group-12.png') }}" />
+          <div class="frame">
+            <p class="div">Google 캘린더와 날씨 정보를 불러오는 중입니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ 이동 경로도 Flask 라우팅 기준으로 -->
+    <script>
+      setTimeout(function () {
+        window.location.href = "/success";
+      }, 2000);
+    </script>
+  </body>
+</html>

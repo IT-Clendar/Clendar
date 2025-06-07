@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>프로필 설정</title>
+
+    <!-- ✅ Flask static 경로로 수정 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/globals.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/3.profile.css') }}" />
+    
+    <!-- 🔁 인라인 스타일 유지됨 -->
+    <style>
+      .input-box {
+        position: absolute;
+        width: 333px;
+        height: 42px;
+        border: none;
+        background-color: transparent;
+        font-size: 20px;
+        padding: 10px;
+        color: #333;
+        outline: none;
+      }
+
+      .input-box::placeholder {
+        color: #999;
+      }
+
+      .button-wrapper {
+        position: absolute;
+        cursor: pointer;
+      }
+
+      .button-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: filter 0.2s ease, transform 0.2s ease;
+      }
+
+      .button-wrapper.active .button-img {
+        filter: brightness(0.7);
+        transform: scale(0.95);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ✅ 이미지 경로 전부 수정 -->
+    <img src="{{ url_for('static', filename='images/3.screen_profile.jpg') }}" alt="전체 화면" />
+
+    <img src="{{ url_for('static', filename='images/3.text_preferred_activities.svg') }}" alt="선호 활동"
+         style="position:absolute; top:740px; left:50px; object-fit:contain;" />
+    
+    <img src="{{ url_for('static', filename='images/3.text_preferred_activities_guide_message.svg') }}" alt="가이드"
+         style="position:absolute; top:770px; left:15px; object-fit:contain;" />
+
+    <img src="{{ url_for('static', filename='images/3.text_weather sensitivity.svg') }}" alt="날씨 민감도"
+         style="position:absolute; top:490px; left:35px; object-fit:contain;" />
+
+    <!-- 생략 없이 동일하게 모든 이미지 url_for() 처리 -->
+    <!-- ... 전체 img 태그의 src 경로를 url_for('static', filename='images/...') 로 수정 ... -->
+
+    <img src="{{ url_for('static', filename='images/3.btn_home.svg') }}" alt="홈 버튼"
+         id="home-button"
+         style="position:absolute; top:47px; left:50px; width:33px; height:47px; object-fit:contain;" />
+
+    <img src="{{ url_for('static', filename='images/3.btn_save.svg') }}" alt="저장 버튼"
+         id="save-button"
+         style="position:absolute; top:1200px; left:110px; width:180px; height:60px; object-fit:contain;" />
+
+    <!-- 버튼, 활동 이미지 등도 전부 동일하게 url_for() 로 변경 -->
+    <!-- 예시 한 줄만 보여줄게 -->
+    <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="running">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_running.svg') }}" alt="러닝" class="button-img" />
+    </div>
+
+    <!-- 생략: 나머지 버튼들에도 동일하게 적용 -->
+
+    <!-- 입력창 -->
+    <input type="text" class="input-box" id="nickname" style="top: 224px; left: 35px" /> 
+    <input type="number" class="input-box" id="age" style="top: 311px; left: 35px" />
+    <input type="text" class="input-box" id="job" style="top: 398px; left: 35px" />
+    <input type="text" class="input-box" id="addtion" style="top: 1044px; left: 35px" />
+
+    <!-- ✅ JS는 그대로 사용 가능, 다만 경로만 Flask용으로 수정 -->
+    <script>
+      document.querySelectorAll('.input-box').forEach(input => {
+        input.addEventListener('input', () => {
+          if (input.value.trim() !== '') {
+            input.classList.add('filled');
+          } else {
+            input.classList.remove('filled');
+          }
+        });
+      });
+
+      document.getElementById("home-button").addEventListener("click", function () {
+        window.location.href = "/main";  // ✅ Flask 라우팅 경로
+      });
+
+      document.querySelectorAll(".button-wrapper").forEach((wrapper, index) => {
+        wrapper.addEventListener("click", () => {
+          wrapper.classList.toggle("active");
+          const isActive = wrapper.classList.contains("active");
+          localStorage.setItem(`activity-button-${index}`, isActive);
+        });
+      });
+
+      const group1 = ["check1-button", "check2-button", "check3-button"];
+      const group2 = ["check4-button", "check5-button", "check6-button"];
+
+      function setupButtonGroup(group) {
+        group.forEach(id => {
+          const btn = document.getElementById(id);
+          btn.addEventListener("click", () => {
+            group.forEach(otherId => {
+              const otherBtn = document.getElementById(otherId);
+              if (otherId === id) {
+                otherBtn.style.filter = "brightness(0.5)";
+                localStorage.setItem(id, "true");
+              } else {
+                otherBtn.style.filter = "none";
+                localStorage.setItem(otherId, "false");
+              }
+            });
+          });
+        });
+      }
+
+      setupButtonGroup(group1);
+      setupButtonGroup(group2);
+
+      document.getElementById('save-button').addEventListener('click', () => {
+        const nickname = document.getElementById('nickname').value;
+        const age = document.getElementById('age').value;
+        const job = document.getElementById('job').value;
+        const addtion = document.getElementById('addtion').value;
+
+        localStorage.setItem('nickname', nickname);
+        localStorage.setItem('age', age);
+        localStorage.setItem('job', job);
+        localStorage.setItem('addtion', addtion);
+
+        alert('저장되었습니다');
+      });
+
+      window.addEventListener('load', () => {
+        ['nickname', 'age', 'job', 'addtion'].forEach(id => {
+          const saved = localStorage.getItem(id);
+          if (saved !== null) {
+            const input = document.getElementById(id);
+            input.value = saved;
+            if (saved.trim() !== '') input.classList.add('filled');
+            else input.classList.remove('filled');
+          }
+        });
+
+        [...group1, ...group2].forEach(id => {
+          const btn = document.getElementById(id);
+          const savedState = localStorage.getItem(id);
+          if (savedState === "true") {
+            btn.style.filter = "brightness(0.5)";
+          } else {
+            btn.style.filter = "none";
+          }
+        });
+
+        document.querySelectorAll(".button-wrapper").forEach((wrapper, index) => {
+          const saved = localStorage.getItem(`activity-button-${index}`);
+          if (saved === "true") {
+            wrapper.classList.add("active");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

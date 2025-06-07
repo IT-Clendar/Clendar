@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>시작 화면</title>
+
+    <!-- ✅ Flask 스타일 시트 경로 수정 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/globals.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/1.start.css') }}" />
+  </head>
+
+  <body>
+    <!-- 전체 화면 컨테이너 -->
+    <div style="position: relative; width: 390px; height: 844px; overflow: hidden;">
+
+      <!-- ✅ 배경 이미지 -->
+      <img src="{{ url_for('static', filename='images/1.screen_start.jpg') }}" alt="전체 화면"
+           style="position:absolute; top:0px; left:0px; width:390px; height:844px; object-fit:cover;" />
+
+      <!-- ✅ 구글 버튼  -->
+      <img src="{{ url_for('static', filename='images/1.btn_goolgle.svg') }}" alt="구글 버튼"
+           id="login-button"
+           style="position:absolute; top:560px; left:33px; width:325px; height:95px; object-fit:contain;" />
+
+      <!-- ✅ 가이드 메시지 -->
+      <img src="{{ url_for('static', filename='images/1.text_default_guide_message.svg') }}" alt="가이드 메시지"
+           style="position:absolute; top:673px; left:12px; width:367px; height:53px; object-fit:contain;" />
+    </div>
+
+    <!-- ✅ 로딩 설명 오버레이 영역 (예시: 남겨놓을 수도 있음, 경로 맞춰야 함) -->
+    <!-- 여기에 img/ellipse-2.svg 같은 파일도 사용하려면 images 폴더에 있어야 함 -->
+
+    <!-- 로그인 버튼 클릭 -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginButton = document.getElementById("login-button");
+
+        if (loginButton) {
+          loginButton.addEventListener("click", function () {
+            // ✅ Flask 라우팅에 맞게 URL 수정
+            window.location.href = "/loading";
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
