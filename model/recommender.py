@@ -27,7 +27,7 @@ from .calendar_service import fetch_upcoming_events
 from .weather_service import get_weather_data
 from .activity_model import check_suitability, suggest_alternative, load_model_components
 from dateutil import parser
-import datetime
+from datetime import datetime, timezone
 import traceback
 
 # 모델 로드
@@ -46,7 +46,7 @@ def recommend_for_user(user_id="1"):
     try:
         events = fetch_upcoming_events()
         result = []
-        now = datetime.datetime.utcnow()
+        now = datetime.now(timezone.utc)
 
         for event in events:
             summary = event.get('summary', '제목 없음')

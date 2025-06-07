@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+from pytz import timezone
 import os
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -19,10 +20,12 @@ def get_calendar_service():
 
 def fetch_upcoming_events(max_results=10):
     service = get_calendar_service()
-    now = datetime.datetime.utcnow().isoformat() + 'Z'
+    kst= timezone('Asia/Seoul')
+    now=datetime.now(kst).isoformat()
+
     events_result = service.events().list(
         calendarId='primary',
-        timeMin=now,
+        timeMin=now + 'Z',
         maxResults=max_results,
         singleEvents=True,
         orderBy='startTime'
