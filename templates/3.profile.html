@@ -59,6 +59,7 @@
     <img src="{{ url_for('static', filename='images/3.text_weather sensitivity.svg') }}" alt="날씨 민감도"
          style="position:absolute; top:490px; left:35px; object-fit:contain;" />
 
+
     <!-- 생략 없이 동일하게 모든 이미지 url_for() 처리 -->
     <!-- ... 전체 img 태그의 src 경로를 url_for('static', filename='images/...') 로 수정 ... -->
 
@@ -77,7 +78,84 @@
       <img src="{{ url_for('static', filename='images/3.btn_activity_running.svg') }}" alt="러닝" class="button-img" />
     </div>
 
+    <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="drama">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_drama.svg') }}" alt="드라마" class="button-img" />
+    </div>
+
+    <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="friends">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_friends.svg') }}" alt="친구" class="button-img" />
+    </div>
+
+    <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="gym">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_gym.svg') }}" alt="헬스장" class="button-img" />
+    </div>
+
+    <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="homeworkout">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_homeworkout.svg') }}" alt="과제" class="button-img" />
+    </div>
+
+    <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="movie">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_movie.svg') }}" alt="영화" class="button-img" />
+    </div>
+
+    <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="music">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_music.svg') }}" alt="음악" class="button-img" />
+    </div>
+
+
+    <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="photo">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_photo.svg') }}" alt="사진" class="button-img" />
+    </div>
+
+
+    <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="reading">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_reading.svg') }}" alt="독서" class="button-img" />
+    </div>
+
+
+    <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="swimming">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_swimming.svg') }}" alt="수영" class="button-img" />
+    </div>
+
+        <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="walk">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_walk.svg') }}" alt="걷기" class="button-img" />
+    </div>
+        <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="yoga">
+      <div class="button-overlay"></div>
+      <img src="{{ url_for('static', filename='images/3.btn_activity_yoga.svg') }}" alt="요가" class="button-img" />
+    </div>
     <!-- 생략: 나머지 버튼들에도 동일하게 적용 -->
+     <!-- ✅ 날씨 민감도 버튼 추가 -->
+<img src="{{ url_for('static', filename='images/3.btn_check.svg') }}" alt="민감도 낮음"
+     id="check1-button"
+     style="position:absolute; top:530px; left:70px; width:30px; height:30px; object-fit:contain;" />
+<img src="{{ url_for('static', filename='images/3.btn_check.svg') }}" alt="민감도 보통"
+     id="check2-button"
+     style="position:absolute; top:530px; left:180px; width:30px; height:30px; object-fit:contain;" />
+<img src="{{ url_for('static', filename='images/3.btn_check.svg') }}" alt="민감도 높음"
+     id="check3-button"
+     style="position:absolute; top:530px; left:290px; width:30px; height:30px; object-fit:contain;" />
+
+<!-- ✅ 미세먼지 민감도 버튼 추가 -->
+<img src="{{ url_for('static', filename='images/3.btn_check.svg') }}" alt="미세먼지 낮음"
+     id="check4-button"
+     style="position:absolute; top:660px; left:70px; width:30px; height:30px; object-fit:contain;" />
+<img src="{{ url_for('static', filename='images/3.btn_check.svg') }}" alt="미세먼지 보통"
+     id="check5-button"
+     style="position:absolute; top:660px; left:180px; width:30px; height:30px; object-fit:contain;" />
+<img src="{{ url_for('static', filename='images/3.btn_check.svg') }}" alt="미세먼지 높음"
+     id="check6-button"
+     style="position:absolute; top:660px; left:290px; width:30px; height:30px; object-fit:contain;" />
 
     <!-- 입력창 -->
     <input type="text" class="input-box" id="nickname" style="top: 224px; left: 35px" /> 
