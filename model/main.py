@@ -87,8 +87,10 @@
 #         traceback.print_exc()
 #         return JSONResponse(status_code=500, content={"error": str(e)})
 
-
-import firebase_admin
+import os, json,tempfile
+from firebase_admin import credentials, initialize_app
+from dotenv import load_dotenv
+# import firebase_admin
 from firebase_admin import credentials, messaging
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
@@ -99,9 +101,22 @@ from dateutil import parser
 import datetime
 import traceback
 
-# Firebase Admin 초기화
-cred = credentials.Certificate("firebase_key.json")
-firebase_admin.initialize_app(cred)
+load_dotenv()
+
+firebase_json = os.environ.get("FIREBASE_CREDENTIALS")
+if not firebase_json:
+    raise ValueError("FIREBASE_CREDENTIALS 환경변수가 설정되지 않았습니다.")
+
+with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".json") as tmp:
+    tmp.write(firebase_json)
+    tmp.flush()
+    cred = credentials.Certificate(tmp.name)
+
+initialize_app(cred)
+
+# # Firebase Admin 초기화
+# cred = credentials.Certificate("firebase_key.json")
+# firebase_admin.initialize_app(cred)
 
 # 사용자의 디바이스 토큰 (이걸 실제 사용자별로 저장하고 관리해야 함)
 USER_DEVICE_TOKEN = "YOUR_CLIENT_DEVICE_TOKEN_HERE"  # <- 이걸 클라이언트 앱에서 받아서 저장해야 함
