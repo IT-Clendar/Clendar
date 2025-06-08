@@ -22,13 +22,23 @@ SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 def get_calendar_service():
     creds = None
-    token_path = 'model/token.json'
 
-    # 배포용: 토큰이 있으면 그것만 사용
-    if os.path.exists(token_path):
-        creds = Credentials.from_authorized_user_file(token_path, SCOPES)
-    else:
-        raise RuntimeError("❌ token.json 없음 - 로컬에서 먼저 생성하고 배포하세요.")
+    token_json_str = os.environ.get("TOKEN_JSON")
+    if not token_json_str:
+        raise RuntimeError("❌ TOKEN_JSON 환경변수가 없습니다.")
+
+    try:
+        # 문자열을 JSON으로 파싱
+        token_info = json.loads(token_json_str)
+
+        # 임시 파일로 작성
+        with tempfile.NamedTemporaryFile(mode="w+", suffix=".json", delete=False) as tmp:
+            json.dump(token_info, tmp)
+            tmp.flush()
+            creds = Credentials.from_authorized_user_file(tmp.name, SCOPES)
+
+    except Exception as e:
+        raise RuntimeError(f"❌ TOKEN_JSON 파싱 실패: {e}")
 
     return build('calendar', 'v3', credentials=creds)
 
