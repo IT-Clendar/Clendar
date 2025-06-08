@@ -1,0 +1,168 @@
+.element {
+  background-color: #f5f7fa;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.element .overlap-group-wrapper {
+  background-color: #f5f7fa;
+  width: 390px;
+  height: 844px;
+}
+
+.element .overlap-group {
+  position: relative;
+  height: 844px;
+}
+
+.element .ellipse {
+  position: absolute;
+  width: 369px;
+  height: 452px;
+  top: 392px;
+  left: 0;
+}
+
+.element .img {
+  position: absolute;
+  width: 342px;
+  height: 402px;
+  top: 0;
+  left: 48px;
+}
+
+.element .group {
+  position: absolute;
+  width: 300px;
+  height: 72px;
+  top: 270px;
+  left: 46px;
+}
+
+.element .img-2 {
+  position: absolute;
+  width: 166px;
+  height: 18px;
+  top: 389px;
+  left: 46px;
+}
+
+.element .line {
+  position: absolute;
+  width: 300px;
+  height: 1px;
+  top: 241px;
+  left: 46px;
+  object-fit: cover;
+}
+
+.element .frame {
+  position: absolute;
+  width: 390px;
+  height: 258px;
+  top: 416px;
+  left: 0;
+}
+
+.element .view {
+  position: absolute;
+  width: 302px;
+  height: 55px;
+  top: 710px;
+  left: 44px;
+}
+
+.element .group-2 {
+  position: absolute;
+  width: 310px;
+  height: 63px;
+  top: 0;
+  left: -4px;
+}
+
+.element .group-3 {
+  position: absolute;
+  width: 274px;
+  height: 114px;
+  top: 109px;
+  left: 58px;
+}
+
+.element .image {
+  position: absolute;
+  width: 36px;
+  height: 33px;
+  top: 40px;
+  left: 40px;
+}
+
+.element .image-2 {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 40px;
+  left: 318px;
+}
+
+.recommendation-wrapper {
+  position: absolute;
+  width: 334px;
+  height: 86px;
+}
+
+.recommendation-wrapper img {
+  position:absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index:1;
+}
+
+.recommendation-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;    /* 수직 가운데 정렬 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  pointer-events: none;
+  z-index: 2;
+}
+
+.recommendation-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+}
+
+#weather-box {
+  position: absolute;
+  top: 270px;
+  left: 46px;
+  width: 300px;
+  height: 72px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  z-index: 5;
+}
+

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>추천 결과</title>
+
+  <!-- 스타일 -->
+  <link rel="stylesheet" href="{{ url_for('static', path='styles/globals.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='styles/5.recommendation.css') }}">
+
+  <!-- ✅ Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <!-- 전체 화면 배경 -->
+  <img src="{{ url_for('static', path='images/5.screen_recommendation.jpg') }}" alt="전체 화면" />
+
+  <!-- 일정 표시 -->
+  <div id="schedule-box" style="position:absolute; top:150px; left:62px; color:black; font-size:17px; font-weight:500;"></div>
+
+  <!-- 날씨 박스 -->
+  <div id="weather-box">
+    <div id="weather-text">날씨 불러오는 중...</div>
+  </div>
+
+  <!-- 홈 버튼 -->
+  <img src="{{ url_for('static', path='images/3.btn_home.svg') }}" alt="홈 버튼"
+       id="home-button"
+       style="position:absolute; top:47px; left:50px; width:33px; height:47px;" />
+
+  <!-- 마이페이지 버튼 -->
+  <img src="{{ url_for('static', path='images/4.btn_mypage.svg') }}" alt="내 정보 버튼"
+       id="mypage-button"
+       style="position:absolute; top:47px; left:330px; width:29px; height:41px;" />
+
+  <!-- 오늘의 일정 텍스트 이미지 -->
+  <img src="{{ url_for('static', path='images/5.text_today_schedule.svg') }}" alt="오늘의 일정"
+       style="position:absolute; top:58px; left:120px; width:169px; height:34px;" />
+
+  <!-- 추천 결과 버튼 1 -->
+  <div class="recommendation-wrapper" style="top:450px; left:43px;">
+    <img src="{{ url_for('static', path='images/5.btn_recommendation_act1.svg') }}" alt="추천1" />
+    <div class="recommendation-box">
+      <div id="recommendation1-text" class="recommendation-text">로딩 중...</div>
+    </div>
+  </div>
+
+<!-- 추천 결과 버튼 2 -->
+  <div class="recommendation-wrapper" style="top:550px; left:43px;">
+    <img src="{{ url_for('static', path='images/5.btn_recommendation_act2.svg') }}" alt="추천2" />
+    <div class="recommendation-box">
+      <div id="recommendation2-text" class="recommendation-text">로딩 중...</div>
+    </div>
+  </div>
+
+
+  <!-- ✅ 차트 영역 추가 -->
+  <!-- <canvas id="pmChart" width="330" height="160" style="position:absolute; top:650px; left:45px;"></canvas> -->
+<canvas id="pmChart" style="position:absolute; top:650px; left:45px; width:90%; max-width:330px; height:auto;"></canvas>
+
+  <!-- 추천 다시 받기 버튼 -->
+  <img src="{{ url_for('static', path='images/5.btn_recommendation_again.svg') }}" alt="추천 다시 받기"
+       id="recommendation_again-button"
+       style="position:absolute; top:700px; left:43px; width:334px; height:86px;" />
+
+  <!-- 알림 메시지 -->
+  <div id="toast-message">일정이 수정/등록 되었습니다</div>
+
+  <!-- ✅ JavaScript -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("/api/recommend?user_id=1")
+        .then(res => res.json())
+        .then(data => {
+          // console.log("📦 추천 API 응답:", data);
+          console.log("📦 추천 API 응답:", JSON.stringify(data, null, 2));
+         
+          const list = data.recommendations;
+          const sBox = document.getElementById("schedule-box");
+          const r1 = document.getElementById("recommendation1-text");
+          const r2 = document.getElementById("recommendation2-text");
+          const wBox = document.getElementById("weather-text");
+
+          if (!list || list.length === 0) {
+            r1.textContent = "추천 결과 없음";
+            r2.textContent = "";
+            return;
+          }
+
+          const first = list[0];
+          console.log("✅ 첫 번째 추천 데이터:", first);
+          sBox.textContent = `${first.start || '-'} - ${first.summary || '-'} (${first.location || '-'})`;
+          r1.textContent = `${first.status || '-'} - ${first.summary || '-'}`;
+          r2.textContent = first.alternative ? `대안: ${first.alternative}` : "대안 없음";
+
+          if (first.weather) {
+            const w = first.weather;
+            wBox.textContent = `${w.temp}°C, ${w.description}, 미세먼지 PM10: ${w.pm10}`;
+          }
+
+          // // ✅ Chart.js 그래프 그리기
+          // const sorted = list.sort((a, b) => new Date(a.start) - new Date(b.start));
+          // const labels = sorted.map(item =>
+          //   new Date(item.start).toLocaleDateString("ko-KR", { month: 'short', day: 'numeric' })
+          // );
+          // const pm25 = sorted.map(item => item.weather ? item.weather.pm25 : null);
+
+          // const ctx = document.getElementById("pmChart").getContext("2d");
+          // new Chart(ctx, {
+          //   type: 'line',
+          //   data: {
+          //     labels: labels,
+          //     datasets: [{
+          //       label: "PM2.5 (미세먼지)",
+          //       data: pm25,
+          //       borderColorh: 2
+          //     }]
+          //   },
+          //   options: {
+          //     responsive: true, 
+          //     plugins: {
+          //       title: {
+          //         display: true,
+          //         text: "일정별 미세먼지 추세"
+          //       }
+          //     },
+          //     scales: {
+          //       y: {
+          //         beginAtZero: true,
+          //         suggestedMax: 100
+          //       }
+          //     }
+          //   }: "rgba(255,99,132,1)",
+          //       backgroundColor: "rgba(255,99,132,0.2)",
+          //       fill: true,
+          //       tension: 0.3,
+          //       borderWidt
+          // });
+        })
+        .catch(err => {
+          console.error("❌ 추천 API 호출 오류:", err);
+          document.getElementById("recommendation1-text").textContent = "추천 실패";
+        });
+
+      // 버튼 이벤트 연결
+      document.getElementById("mypage-button").addEventListener("click", () => {
+        window.location.href = "/profile";
+      });
+
+      document.getElementById("home-button").addEventListener("click", () => {
+        window.location.href = "/main";
+      });
+
+      document.getElementById("recommendation_again-button").addEventListener("click", () => {
+        window.location.href = "/recommendation-loading";
+      });
+    });
+  </script>
+</body>
+</html>

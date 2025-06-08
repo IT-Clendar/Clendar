@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{{url_for('static',path='styles/globals.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static',path='styles/style.css') }}" />
+    <style>
+      .input-box {
+        position: absolute;
+        width: 333px;
+        height: 42px;
+        border: none;
+        background-color: transparent;
+        font-size: 20px;
+        padding: 10px;
+        color: #333;
+        outline: none;
+      }
+
+      .input-box::placeholder {
+        color: #999;
+      }
+
+      .button-wrapper {
+    position: absolute;
+    cursor: pointer;
+  }
+
+  .button-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: filter 0.2s ease, transform 0.2s ease;
+  }
+
+  .button-wrapper.active .button-img {
+    filter: brightness(0.7); /* 혹은 contrast, saturate 등도 가능 */
+    transform: scale(0.95); /* 클릭 시 살짝 눌리는 효과 */
+  }
+    </style>
+  </head>
+
+  <body>
+    <!-- 배경 이미지 -->
+    <img src="{{url_for('static',path='images/3.screen_profile.jpg') }}" alt="전체 화면" />
+
+    <!-- 문구 -->
+
+    <img src="{{url_for('static',path='images/3.text_preferred_activities.svg') }}" alt="선호 활동"
+         style="position:absolute; top:740px; left:50px; object-fit:contain;" />
+    
+    <img src="{{ url_for('static',path='images/3.text_preferred_activities_guide_message.svg') }}" alt="좋아하는 활동을 선택해주세요요"
+         style="position:absolute; top:770px; left:15px; object-fit:contain;" />
+
+    <img src="{{url_for('static',path='images/3.text_weather sensitivity.svg') }}" alt="날씨 민감도"
+         style="position:absolute; top:490px; left:35px; object-fit:contain;" />
+
+    <img src="{{url_for('static',path='images/3.text_weather sensitivity_low.svg') }}" alt="날씨 민감도 낮음"
+         style="position:absolute; top:570px; left:20px; object-fit:contain;" />
+
+    <img src="{{url_for('static',path='images/3.text_weather sensitivity_middle.svg') }}" alt="날씨 민감도 중간"
+         style="position:absolute; top:570px; left:135px; object-fit:contain;" />
+         
+    <img src="{{ url_for('static',path='images/3.text_weather sensitivity_high.svg') }}" alt="날씨 민감도 높음"
+         style="position:absolute; top:570px; left:245px; object-fit:contain;" />
+
+    <img src="{{url_for('static',path='images/3.text_fine dust sensitivity.svg') }}" alt="미세먼지 민감도"
+         style="position:absolute; top:630px; left:35px; object-fit:contain;" />
+
+    <img src="{{url_for('static',path='images/3.text_fine dust sensitivity_low.svg') }}" alt="미세먼지 민감도 낮음"
+         style="position:absolute; top:700px; left:20px; object-fit:contain;" />
+
+    <img src="{{url_for('static',path='images/3.text_fine dust sensitivity_middle.svg') }}" alt="미세먼지 민감도 중간"
+         style="position:absolute; top:700px; left:135px; object-fit:contain;" />
+         
+    <img src="{{url_for('static',path='images/3.text_fine dust sensitivity_high.svg') }}" alt="미세먼지 민감도 높음"
+         style="position:absolute; top:700px; left:245px; object-fit:contain;" />
+
+    <!-- 홈 버튼 -->
+    <img src="{{url_for('static',path='images/3.btn_home.svg') }}" alt="홈 버튼"
+         id="home-button"
+         style="position:absolute; top:47px; left:50px; width:33px; height:47px; object-fit:contain;" />
+
+    <!-- 저장 버튼 -->
+    <img src="{{url_for('static',path='images/3.btn_save.svg') }}" alt="저장 버튼"
+         id="save-button"
+         style="position:absolute; top:1200px; left:110px; width:180px; height:60px; object-fit:contain;" />
+
+    <!-- 민감도 버튼 -->
+    <img src="{{url_for('static',path='images/3.btn_check.svg') }}" alt="민감도 버튼"
+         id="check1-button"
+         style="position:absolute; top:530px; left:70px; width:30px; height:30px; object-fit:contain;" />
+
+    <img src="{{url_for('static',path='images/3.btn_check.svg') }}" alt="민감도 버튼"
+         id="check2-button"
+         style="position:absolute; top:530px; left:180px; width:30px; height:30px; object-fit:contain;" />
+
+    <img src="{{url_for('static',path='images/3.btn_check.svg') }}" alt="민감도 버튼"
+         id="check3-button"
+         style="position:absolute; top:530px; left:290px; width:30px; height:30px; object-fit:contain;" />
+
+    <img src="{{url_for('static',path='images/3.btn_check.svg') }}" alt="민감도 버튼"
+         id="check4-button"
+         style="position:absolute; top:660px; left:70px; width:30px; height:30px; object-fit:contain;" />
+
+    <img src="{{url_for('static',path='images/3.btn_check.svg') }}" alt="민감도 버튼"
+         id="check5-button"
+         style="position:absolute; top:660px; left:180px; width:30px; height:30px; object-fit:contain;" />
+
+      <img src="{{url_for('static',path='images/3.btn_check.svg') }}" alt="민감도 버튼"
+         id="check6-button"
+         style="position:absolute; top:660px; left:290px; width:30px; height:30px; object-fit:contain;" />
+
+    <!-- 활동 버튼들 -->
+    <div class="button-wrapper" style="top:800px; left:45px; width:53px; height:31px;" data-id="running">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_running.svg') }}" alt="러닝" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:800px; left:100px; width:94px; height:31px;" data-id="walk">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_walk.svg') }}" alt="산책" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:800px; left:200px; width:89px; height:31px;" data-id="homeworkout">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_homeworkout.svg') }}" alt="홈트레이닝" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:800px; left:300px; width:53px; height:31px;" data-id="swimming">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_swimming.svg') }}" alt="수영" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:850px; left:40px; width:110px; height:31px;" data-id="yoga">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_yoga.svg') }}" alt="요가" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:850px; left:160px; width:94px; height:31px;" data-id="gym">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_gym.svg') }}" alt="헬스장" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:850px; left:270px; width:76px; height:31px;" data-id="badminton">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_badminton.svg') }}" alt="배드민턴" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:900px; left:40px; width:80px; height:31px;" data-id="foodtrip">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_foodtrip.svg') }}" alt="맛집" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:900px; left:122px; width:80px; height:31px;" data-id="movie">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_movie.svg') }}" alt="영화" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:900px; left:210px; width:80px; height:31px;" data-id="photo">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_photo.svg') }}" alt="사진" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:900px; left:300px; width:53px; height:31px;" data-id="reading">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_reading.svg') }}" alt="독서" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:950px; left:40px; width:80px; height:31px;" data-id="music">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_music.svg') }}" alt="악기" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:950px; left:130px; width:94px; height:31px;" data-id="friends">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_friends.svg') }}" alt="친구" class="button-img" />
+    </div>
+    <div class="button-wrapper" style="top:950px; left:235px; width:95px; height:31px;" data-id="drama">
+      <div class="button-overlay"></div>
+      <img src="{{url_for('static',path='images/3.btn_activity_drama.svg') }}" alt="드라마" class="button-img" />
+    </div>
+
+    <!-- 입력창 --> 
+    <input type="text" class="input-box" id="nickname" style="top: 224px; left: 35px" /> 
+    <input type="number" class="input-box" id="age" style="top: 311px; left: 35px" />
+    <input type="text" class="input-box" id="job" style="top: 398px; left: 35px" />
+    <input type="text" class="input-box" id="addtion" style="top: 1044px; left: 35px" />
+
+<script>
+  // 입력 시 .filled 클래스 처리
+  document.querySelectorAll('.input-box').forEach(input => {
+    input.addEventListener('input', () => {
+      if (input.value.trim() !== '') {
+        input.classList.add('filled');
+      } else {
+        input.classList.remove('filled');
+      }
+    });
+  });
+
+  // 홈 버튼 클릭 시 이동
+  document.getElementById("home-button").addEventListener("click", function () {
+    window.location.href = "/main";
+  });
+
+  // 활동 버튼 클릭 시 상태 토글 및 저장
+  document.querySelectorAll(".button-wrapper").forEach((wrapper, index) => {
+    wrapper.addEventListener("click", () => {
+      wrapper.classList.toggle("active");
+
+      const isActive = wrapper.classList.contains("active");
+      localStorage.setItem(`activity-button-${index}`, isActive);
+    });
+  });
+
+  // 민감도 버튼 그룹
+  const group1 = ["check1-button", "check2-button", "check3-button"];
+  const group2 = ["check4-button", "check5-button", "check6-button"];
+
+  function setupButtonGroup(group) {
+    group.forEach(id => {
+      const btn = document.getElementById(id);
+      btn.addEventListener("click", () => {
+        group.forEach(otherId => {
+          const otherBtn = document.getElementById(otherId);
+          if (otherId === id) {
+            otherBtn.style.filter = "brightness(0.5)";
+            localStorage.setItem(id, "true");
+          } else {
+            otherBtn.style.filter = "none";
+            localStorage.setItem(otherId, "false");
+          }
+        });
+      });
+    });
+  }
+
+  setupButtonGroup(group1);
+  setupButtonGroup(group2);
+
+  // 텍스트 입력값 저장
+  document.getElementById('save-button').addEventListener('click', () => {
+    const nickname = document.getElementById('nickname').value;
+    const age = document.getElementById('age').value;
+    const job = document.getElementById('job').value;
+    const addtion = document.getElementById('addtion').value;
+
+    localStorage.setItem('nickname', nickname);
+    localStorage.setItem('age', age);
+    localStorage.setItem('job', job);
+    localStorage.setItem('addtion', addtion);
+
+    alert('저장되었습니다');
+    setTimeout(() => {
+    window.location.href = "/main";
+  }, 1000);
+  
+  });
+
+  // 페이지 로드시 값 복원
+  window.addEventListener('load', () => {
+    // 입력값 복원
+    ['nickname', 'age', 'job', 'addtion'].forEach(id => {
+      const saved = localStorage.getItem(id);
+      if (saved !== null) {
+        const input = document.getElementById(id);
+        input.value = saved;
+        if (saved.trim() !== '') input.classList.add('filled');
+        else input.classList.remove('filled');
+      }
+    });
+
+    // 민감도 버튼 복원
+    [...group1, ...group2].forEach(id => {
+      const btn = document.getElementById(id);
+      const savedState = localStorage.getItem(id);
+      if (savedState === "true") {
+        btn.style.filter = "brightness(0.5)";
+      } else {
+        btn.style.filter = "none";
+      }
+    });
+
+    // 활동 버튼 복원
+    document.querySelectorAll(".button-wrapper").forEach((wrapper, index) => {
+      const saved = localStorage.getItem(`activity-button-${index}`);
+      if (saved === "true") {
+        wrapper.classList.add("active");
+      }
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{{url_for('static',path='styles/globals.css') }}" />
+    <link rel="stylesheet" href="{{url_for('static',path='styles/style.css') }}" />
+
+  </head>
+  <body>
+
+    <img src="{{url_for('static',path='images/4.screen_main.jpg') }}" alt="전체 화면" />
+
+    <img src="{{url_for('static',path='images/4.btn_mypage.svg') }}" alt="내 정보 버튼"
+     id="mypage-button"
+     style="position:absolute; top:47px; left:330px; width:29px; height:41px; object-fit:contain;" />
+
+     <img src="{{url_for('static',path='images/4.btn_recommend.svg') }}" alt="추전 결과 버튼"
+     id="recommend-button"
+     style="position:absolute; top:590px; left:45px; width:310px; height:82px; object-fit:contain;" />
+
+    <div class="element">
+      <div class="overlap-group-wrapper">
+        <div class="overlap-group">
+          <img class="ellipse" src="{{ url_for('static',path='img/ellipse-4.svg') }}" />
+          <img class="img" src="{{ url_for('static',path='img/ellipse-3.svg') }}" />
+          <img class="group" src="{{ url_for('static',path='img/group-7.svg') }}" />
+          <img class="img-2" src="{{ url_for('static',path='img/image-2.svg') }}" />
+          <img class="line" src="{{ url_for('static',path='img/line-2.svg') }}" />
+          <img class="frame" src="{{ url_for('static',path='img/frame-15.svg') }}" />
+          <div class="view"><img class="group-2" src="{{url_for('static',path='img/group-8.png') }}" /></div>
+          <img class="group-3" src="{{url_for('static',path='img/group-40.svg') }}" />
+          <img class="image" src="{{url_for('static',path='img/image-3.svg') }}" />
+          <img class="image-2" src="{{url_for('static',path='img/image.svg') }}" />
+        </div>
+      </div>
+    </div>
+
+    <script>
+  document.getElementById("mypage-button").addEventListener("click", function () {
+    window.location.href = "/profile";
+  });
+
+  document.getElementById("recommend-button").addEventListener("click", function () {
+    window.location.href = "/recommendation";
+  });
+</script>
+
+  </body>
+</html>

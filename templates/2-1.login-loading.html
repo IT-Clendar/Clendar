@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <!-- styles 폴더 안 globals.css와 2-1.login-loading.css 불러오기 -->
+    <link rel="stylesheet" href="{{ url_for ('static',path='styles/globals.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static',path='styles/2-1.login-loading.css') }}" />
+    <title>로그인 로딩 중</title>
+
+  </head>
+  <body>
+    <img src="{{ url_for('static',path='images/2-1.screen_login-loading.jpg') }}" alt="전체 화면" />
+
+    <div class="element">
+      <div class="overlap-group-wrapper">
+        <div class="overlap-group">
+          <img class="ellipse" src="{{ url_for('static',path='img/ellipse-2.svg') }}" />
+          <img class="img" src="{{ url_for('static',path='img/ellipse-3.svg') }}" />
+          <div class="text-wrapper">로딩 중</div>
+          <img class="group" src="{{ url_for('static',path='img/group-12.png') }}" />
+          <div class="frame">
+            <p class="div">Google 캘린더와 날씨 정보를 불러오는 중입니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      setTimeout(function () {
+        window.location.href = "/success";
+      }, 2000);
+    </script>
+  </body>
+</html>

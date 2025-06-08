@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{{url_for('static',path='styles/globals.css') }}" />
+    <link rel="stylesheet" href="{{url_for('static',path='styles/style.css') }}" />
+  </head>
+  <body>
+    <img src="{{url_for('static',path='images/6.screen_recommendation_loading.jpg') }}" alt="전체 화면" />
+
+    <div class="element">
+      <div class="overlap-group-wrapper">
+        <div class="overlap-group">
+          <img class="ellipse" src="{{url_for('static',path='img/ellipse-2.svg') }}" />
+          <img class="img" src="{{url_for('static',path='img/ellipse-3.svg') }}" />
+          <img class="image" src="{{url_for('static',path='img/image.svg') }}" />
+          <div class="frame">
+            <p class="text-wrapper">Google 캘린더와 날씨 정보를 불러오는 중입니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 실제로는 추천 API를 호출해서 결과를 받아오고 나서 이동합니다.
+      setTimeout(() => {
+        window.location.href = "/recommendation";
+      }, 3000); // 3초 후 추천 결과 페이지로 이동
+    </script>
+  </body>
+</html>
+

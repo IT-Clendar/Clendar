@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>시작 화면</title>
+
+    <!-- 스타일 시트 불러오기 -->
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/globals.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles/1.start.css') }}">
+  </head>
+
+  <body>
+
+    <!-- 전체 화면 컨테이너 -->
+    <div style="position: relative; width: 390px; height: 844px; overflow: hidden;">
+
+      <!-- 배경 이미지 -->
+      <img src="{{ url_for('static', path='images/1.screen_start.jpg') }}" alt="전체 화면"
+           style="position:absolute; top:0px; left:0px; width:390px; height:844px; object-fit:cover;" />
+
+      <!-- 구글 버튼  -->
+      <img src="{{ url_for('static', path='images/1.btn_goolgle.svg') }}" alt="구글 버튼"
+           id="login-button"
+           style="position:absolute; top:560px; left:33px; width:325px; height:95px; object-fit:contain;" />
+
+      <!-- 가이드 메시지 -->
+      <img src="{{ url_for('static', path='images/1.text_default_guide_message.svg') }}" alt="가이드 메시지"
+           style="position:absolute; top:673px; left:12px; width:367px; height:53px; object-fit:contain;" />
+    </div>
+
+    <!-- 로딩 설명 오버레이 -->
+    <div class="overlap-wrapper">
+      <div class="overlap">
+        <img class="ellipse" src="{{ url_for('static', path='img/ellipse-2.svg') }}" />
+        <img class="img" src="{{ url_for('static', path='img/ellipse-3.svg') }}" />
+        <div class="text-wrapper">Clendar</div>
+        <img class="rectangle" src="{{ url_for('static', path='img/rectangle-5.png') }}" />
+        <div class="frame">
+          <p class="google-calendar">
+            Google Calendar 일정과 현재 위치의 날씨 정보를 사용합니다.<br />
+            정보는 저장되지 않으며 일정 추천에만 활용됩니다.
+          </p>
+        </div>
+        <div class="view">
+          <div class="group">
+            <div class="overlap-group">
+              <div class="div">구글로 로그인하기</div>
+              <img class="group-2" src="{{ url_for('static', path='img/group-12.png') }}" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 로그인 버튼 클릭 이벤트 -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginButton = document.getElementById("login-button");
+
+        if (loginButton) {
+          loginButton.addEventListener("click", function () {
+            window.location.href = "/loading";  // Flask 라우트 기반 이동
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
