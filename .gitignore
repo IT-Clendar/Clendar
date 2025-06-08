@@ -9,9 +9,10 @@ token.json
 client_secret.json
 calendar_credentials.json
 google_calendar_key.json
+model/token.json
+model/firebase_key.json
 
 *.secret.json
 *.credentials.json
 *.key.json
- 
  

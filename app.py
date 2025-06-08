@@ -24,6 +24,7 @@ with tempfile.NamedTemporaryFile(mode="w+", delete=False, suffix=".json") as tmp
 
 initialize_app(cred)
 
+
 # 프로머너 설정
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -136,3 +137,8 @@ def api_recommend(user_id: str = "1"):
 def trigger_push():
     run_push_notifications(USER_DEVICE_TOKEN)
     return "\ud83d\udd14 \ud478시 완료"
+
+# app.py 맨 아래 테스트용으로 추가
+if __name__ == "__main__":
+    from model.calendar_service import fetch_upcoming_events
+    print(fetch_upcoming_events())
