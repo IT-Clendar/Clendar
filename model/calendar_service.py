@@ -3,19 +3,33 @@ import os
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+import tempfile
+import json
 
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
+# def get_calendar_service():
+#     token_path = 'model/token.json'
+#     creds = None
+#     if os.path.exists(token_path):
+#         creds = Credentials.from_authorized_user_file(token_path, SCOPES)
+#     else:
+#         flow = InstalledAppFlow.from_client_secrets_file('model/credentials.json', SCOPES)
+#         creds = flow.run_local_server(port=0)
+#         with open(token_path, 'w') as token:
+#             token.write(creds.to_json())
+#     return build('calendar', 'v3', credentials=creds)
+
 def get_calendar_service():
-    token_path = 'model/token.json'
     creds = None
+    token_path = 'model/token.json'
+
+    # 배포용: 토큰이 있으면 그것만 사용
     if os.path.exists(token_path):
         creds = Credentials.from_authorized_user_file(token_path, SCOPES)
     else:
-        flow = InstalledAppFlow.from_client_secrets_file('model/credentials.json', SCOPES)
-        creds = flow.run_local_server(port=0)
-        with open(token_path, 'w') as token:
-            token.write(creds.to_json())
+        raise RuntimeError("❌ token.json 없음 - 로컬에서 먼저 생성하고 배포하세요.")
+
     return build('calendar', 'v3', credentials=creds)
 
 def fetch_upcoming_events(max_results=10):
