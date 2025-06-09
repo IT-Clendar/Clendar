@@ -32,9 +32,9 @@ def get_calendar_service():
         token_info = json.loads(token_json_str)
 
         # 임시 파일로 작성
-        with tempfile.NamedTemporaryFile(mode="w+", suffix=".json", delete=False) as tmp:
-            json.write(token_json_str)
-            tmp.flush()
+        with tempfile.NamedTemporaryFile(mode="w+", suffix=".json", delete=False) as tmp_file:
+            tmp_file.write(token_json_str)
+            tmp_file.flush()
             creds = Credentials.from_authorized_user_file(tmp.name, SCOPES)
 
     except Exception as e:
