@@ -68,3 +68,4 @@ def fetch_upcoming_events(max_results=10):
             'end': end
         })
     return parsed
+print("TOKEN_JSON 환경 변수 원본:", repr(os.environ.get("TOKEN_JSON")))

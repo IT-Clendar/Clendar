@@ -128,6 +128,7 @@ def api_recommend(user_id: str = "1"):
         print(f"🎯 최종 추천 결과:{result}")
 
         return {"recommendations": result}
+        
 
     except Exception as e:
         traceback.print_exc()

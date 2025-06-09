@@ -46,5 +46,40 @@
   });
 </script>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-messaging.js";
+
+  const firebaseConfig = {
+    apiKey: "YOUR_FIREBASE_API_KEY",
+    authDomain: "clendar-461612.firebaseapp.com",
+    projectId: "clendar-461612",
+    messagingSenderId: "105742540098673827492",
+    appId: "YOUR_FIREBASE_APP_ID"
+  };
+
+  // const vapidKey = "YOUR_PUBLIC_VAPID_KEY";
+  const vapidKey = "BJLxokonN4ejJIilBqiZ0gCX-pkPwaJJfNS4NjWW4yXJkcYnlN9jVewh0byJjNAhhZXbXmioYuS392DozhZwPeA";
+  
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+
+  getToken(messaging, { vapidKey }).then((currentToken) => {
+    if (currentToken) {
+      console.log("✅ FCM Token:", currentToken);
+      fetch("/register-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: currentToken })
+      });
+    }
+  });
+
+  onMessage(messaging, (payload) => {
+    const { title, body } = payload.notification;
+    alert(`[알림] ${title} - ${body}`);
+  });
+</script>
+
   </body>
 </html>
