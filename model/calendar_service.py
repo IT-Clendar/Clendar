@@ -35,7 +35,7 @@ def get_calendar_service():
         with tempfile.NamedTemporaryFile(mode="w+", suffix=".json", delete=False) as tmp_file:
             tmp_file.write(token_json_str)
             tmp_file.flush()
-            creds = Credentials.from_authorized_user_file(tmp.name, SCOPES)
+            creds = Credentials.from_authorized_user_file(tmp_file.name, SCOPES)
 
     except Exception as e:
         raise RuntimeError(f"❌ TOKEN_JSON 파싱 실패: {e}")
