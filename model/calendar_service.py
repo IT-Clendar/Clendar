@@ -30,7 +30,7 @@ def get_calendar_service():
     try:
         # 문자열을 JSON으로 파싱
         token_info = json.loads(token_json_str)
-        creds=Credentials.from_authorize_user_info(token_info,SCOPES)
+        creds=Credentials.from_authorized_user_info(token_info,SCOPES)
 
     except Exception as e:
         raise RuntimeError(f"❌ TOKEN_JSON 파싱 실패: {e}")
